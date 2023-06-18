@@ -1,4 +1,4 @@
-# Interprocess-Communication-Techniques-Under-Linux
+# Message encoding/decoding
 We would like to help militant groups into sending encoded messages that only the right
 receiver is able to decode using a multi-processing approach. We’ll assume that if the
 receiver is able to get the encoded messages before a master spy process and is able to
@@ -66,4 +66,4 @@ The application scenario can be explained as follows:
             – The number of successful decoding operations by the receiver exceeds a user-
             defined threshold.
 
-# What you should do:
+# What you should do
