@@ -67,3 +67,13 @@ The application scenario can be explained as follows:
             defined threshold.
 
 # What you should do
+      • Write the code for the above-described application using a multi-processing ap-
+      proach.
+
+      • In order to avoid hard-coding values in your programs, think of creating a text file
+      that contains all the values that should be user-defined and give the file name as an
+      argument to the main program. That will spare you from having to change your
+      code permanently and re-compile.
+
+      • Use graphics elements from opengl library in order to best illustrate the application.
+      Nothing fancy, just simple and elegant elements are enough.
