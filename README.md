@@ -23,20 +23,47 @@ The application scenario can be explained as follows:
       • The children processes should each encode the column message that is passed to
       it before placing the encoded message in the shared memory. Each encoding child
       process acts as follows:
-        – For the first column, for each word in the string, we add 1 to the first character
-        modulo 26, 2 to the second character modulo 26, etc. The child process re-
-        sponsible for encoding that string will place it in the first location in the shared
-        memory.
-        – For the second column, for each word in the string, we add 2 to the first
-        character modulo 26, 4 to the second character modulo 26, etc. The child
-        process responsible for encoding that string will place it in the second location
-        in the shared memory.
-        – Same logic applies to the consecutive columns and words of each column.
-        – Special characters must be encoded as follows:
-           ! ! 1 ? ! 2 , ! 3
+            – For the first column, for each word in the string, we add 1 to the first character
+            modulo 26, 2 to the second character modulo 26, etc. The child process re-
+            sponsible for encoding that string will place it in the first location in the shared
+            memory.
+            – For the second column, for each word in the string, we add 2 to the first
+            character modulo 26, 4 to the second character modulo 26, etc. The child
+            process responsible for encoding that string will place it in the second location
+            in the shared memory.
+            – Same logic applies to the consecutive columns and words of each column.
+            – Special characters must be encoded.
+            – Numbers are encoded as 1,000,000 - number.
+            – Each encoded column must have a prefix or suffix added to it so that the receiver
+            process is able to identify the column number correctly.
+        
+      • Helper processes will continuously swap the messages that are present in the shared
+      memory to make it hard for spy processes to get all the columns of the file. For
+      example, a particular helper process might at some point swap between the encoded
+      messages in locations 3 & 10 of the shared memory.
 
-           ; ! 4 : ! 5 % ! 6
+      • Spy processes will continuously access the shared memory locations randomly to get
+      the encoded messages before sending them to the master spy process.
 
-        – Numbers are encoded as 1,000,000 - number.
-        – Each encoded column must have a prefix or suffix added to it so that the receiver
-        process is able to identify the column number correctly.
+      • The master spy process tries to order the columns in the right order after getting
+      them from the spy processes. It will drop columns it already received. When the
+      master spy is confident it got all the columns, it tries to decode the messages in a
+      file called spy.txt before informing the parent process.
+
+      • The receiver process will continuously access the shared memory locations randomly
+      to get the encoded messages. Similar to the master spy process, it will order the
+      columns it gets in the right order and drops the columns it already received. When
+      it is confident it got all the columns, it tries to decode the messages in a file called
+      receiver.txt before informing the parent process.
+
+      • The parent process decides if the receiver process was able to get the correct file
+      from the sender before the master spy process. If true, then the operation is labeled
+      a successful operation. Otherwise, it is labeled as a failed operation.
+
+      • The simulation ends if any of the following is true:
+            – The number of failed decoding operations by the receiver exceeds a user-defined
+            threshold.
+            – The number of successful decoding operations by the receiver exceeds a user-
+            defined threshold.
+
+What you should do
