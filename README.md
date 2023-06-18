@@ -34,6 +34,7 @@ The application scenario can be explained as follows:
         – Same logic applies to the consecutive columns and words of each column.
         – Special characters must be encoded as follows:
            ! ! 1 ? ! 2 , ! 3
+
            ; ! 4 : ! 5 % ! 6
 
         – Numbers are encoded as 1,000,000 - number.
